@@ -1,0 +1,145 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MixedList(),
+    );
+  }
+}
+
+class MixedList extends StatelessWidget {
+  final List<Map<String, dynamic>> people = [
+    {
+      'name': 'Rohan Sharma',
+      'addresses': ['Dwarka, New Delhi', 'Saket, New Delhi', 'Karol Bagh, New Delhi'],
+      'age': 28,
+      'occupation': 'Marketing Specialist',
+    },
+    {
+      'name': 'Priya Menon',
+      'addresses': ['Indiranagar, Bengaluru', 'Koramangala, Bengaluru', 'Whitefield, Bengaluru'],
+      'age': 34,
+      'occupation': 'Software Engineer',
+    },
+    {
+      'name': 'Anjali Deshmukh',
+      'addresses': ['Shivajinagar, Pune', 'Kothrud, Pune', 'Viman Nagar, Pune'],
+      'age': 42,
+      'occupation': 'Graphic Designer',
+    },
+    {
+      'name': 'Rajiv Kapoor',
+      'addresses': ['Malabar Hill, Mumbai', 'Bandra, Mumbai', 'Juhu, Mumbai'],
+      'age': 38,
+      'occupation': 'Financial Analyst',
+    },
+    {
+      'name': 'Ayesha Khan',
+      'addresses': ['Ballygunge, Kolkata', 'Salt Lake, Kolkata', 'Park Street, Kolkata'],
+      'age': 31,
+      'occupation': 'Teacher',
+    },
+    {
+      'name': 'Vikram Patel',
+      'addresses': ['Navrangpura, Ahmedabad', 'Satellite, Ahmedabad', 'Bodakdev, Ahmedabad'],
+      'age': 45,
+      'occupation': 'Lawyer',
+    },
+    {
+      'name': 'Sneha Iyer',
+      'addresses': ['Besant Nagar, Chennai', 'Adyar, Chennai', 'Velachery, Chennai'],
+      'age': 29,
+      'occupation': 'Journalist',
+    },
+    {
+      'name': 'Arjun Singh',
+      'addresses': ['Civil Lines, Jaipur', 'Vaishali Nagar, Jaipur', 'Malviya Nagar, Jaipur'],
+      'age': 36,
+      'occupation': 'Architect',
+    },
+    {
+      'name': 'Kavita Rao',
+      'addresses': ['Jubilee Hills, Hyderabad', 'Banjara Hills, Hyderabad', 'Gachibowli, Hyderabad'],
+      'age': 27,
+      'occupation': 'Medical Researcher',
+    },
+    {
+      'name': 'Aditya Verma',
+      'addresses': ['Lajpat Nagar, New Delhi', 'Greater Kailash, New Delhi', 'Hauz Khas, New Delhi'],
+      'age': 40,
+      'occupation': 'Project Manager',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Mixed List'),
+      ),
+      body: ListView.builder(
+        itemCount: people.length,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (index == 0 || index % 5 == 0) // Add a heading every 5 items
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Heading ${index}',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ListTile(
+                title: Text(people[index]['name']),
+                subtitle: Text('Age: ${people[index]['age']} - ${people[index]['occupation']}'),
+                trailing: AddressDropdown(
+                  addresses: people[index]['addresses'],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class AddressDropdown extends StatefulWidget {
+  final List<String> addresses;
+
+  AddressDropdown({required this.addresses});
+
+  @override
+  _AddressDropdownState createState() => _AddressDropdownState();
+}
+
+class _AddressDropdownState extends State<AddressDropdown> {
+  String? selectedAddress;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: selectedAddress ?? widget.addresses.first,
+      icon: Icon(Icons.arrow_drop_down),
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedAddress = newValue!;
+        });
+      },
+      items: widget.addresses.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
