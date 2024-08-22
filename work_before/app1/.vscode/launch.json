@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        
+    
+    
+        
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "Flutter: Attach to Device",
+            "type": "dart",
+            "request": "attach"
+        },
+        {
+            "name": "Dart",
+            "type": "dart",
+            "request": "launch",
+            "program": "bin/main.dart"
+        },
+    {
+        "name": "Dart: Attach to Process",
+        "type": "dart",
+        "request": "attach"
+    }
+    ]
+}
